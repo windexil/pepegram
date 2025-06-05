@@ -1,0 +1,11 @@
+# Распакуй архив
+unzip pepegram_v1.1.zip
+cd pepegram
+
+# Инициализируй git-репозиторий
+git init
+git remote add origin https://github.com/ВАШ_ЮЗЕРНЕЙМ/pepegram.git
+git branch -M main
+git add .
+git commit -m "Initial commit"
+git push -u origin main
