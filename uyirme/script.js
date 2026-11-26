@@ -431,6 +431,17 @@ function showStatus(text) {
   statusEl.hidden = false;
 }
 
+// getJSON: файл по адресу url → данные; 404 — ошибка
+async function getJSON(url) {
+  const response = await fetch(url);
+  console.log(`${url}:`, response.status, response.ok);
+  if (!response.ok) {
+    throw new Error(`${url}: ошибка ${response.status}`);
+  }
+  const data = await response.json();
+  return data;
+}
+
 // loadClubs: попросить кружки у сервера
 async function loadClubs() {
   statusEl.classList.remove('is-error');
@@ -438,9 +449,7 @@ async function loadClubs() {
   showStatus('Загрузка кружков…');
   console.log('Запрос отправлен');
   try {
-    const response = await fetch('data.json');
-    console.log('data.json:', response.status, response.ok);
-    const results = await Promise.all([response.json(), getSeats()]);
+    const results = await Promise.all([getJSON('data.json'), getSeats()]);
     const list = results[0];
     const seats = results[1];
     list.forEach((club) => {
