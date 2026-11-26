@@ -437,16 +437,23 @@ async function loadClubs() {
   retryBtn.hidden = true;
   showStatus('Загрузка кружков…');
   console.log('Запрос отправлен');
-  const list = await getClubs();
-  console.log('Кружки пришли:', list.length);
-  const seats = await getSeats();
-  list.forEach((club) => {
-    club.seats = seats[club.id];
-    CLUBS.push(club);
-  });
-  statusEl.hidden = true;
-  console.log('Кружки и места пришли:', CLUBS.length);
-  start();
+  try {
+    const list = await getClubs();
+    console.log('Кружки пришли:', list.length);
+    const seats = await getSeats();
+    list.forEach((club) => {
+      club.seats = seats[club.id];
+      CLUBS.push(club);
+    });
+    statusEl.hidden = true;
+    console.log('Кружки и места пришли:', CLUBS.length);
+    start();
+  } catch (error) {
+    showStatus('Не удалось загрузить кружки');
+    statusEl.classList.add('is-error');
+    retryBtn.hidden = false;
+    console.log('Ошибка:', error.message);
+  }
 }
 
 // ===== Повторить загрузку =====
