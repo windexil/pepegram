@@ -438,6 +438,8 @@ async function loadClubs() {
   showStatus('Загрузка кружков…');
   console.log('Запрос отправлен');
   try {
+    const response = await fetch('data.json');
+    console.log('data.json:', response.status, response.ok);
     const results = await Promise.all([getClubs(), getSeats()]);
     const list = results[0];
     const seats = results[1];
