@@ -2,8 +2,8 @@
 // Новый код урока пишем выше «Запуска»
 console.log('script.js подключен');
 
-// ===== Данные: кружки придут с сервера =====
-// Сервер — заглушка server.js. На уроке 42 — файл data.json
+// ===== Данные: кружки — из файла data.json =====
+// Места и заявки — сервер-заглушка server.js
 const CLUBS = [];
 const CATS = {
   sport: 'Спорт',
@@ -440,7 +440,7 @@ async function loadClubs() {
   try {
     const response = await fetch('data.json');
     console.log('data.json:', response.status, response.ok);
-    const results = await Promise.all([getClubs(), getSeats()]);
+    const results = await Promise.all([response.json(), getSeats()]);
     const list = results[0];
     const seats = results[1];
     list.forEach((club) => {
