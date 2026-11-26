@@ -438,9 +438,9 @@ async function loadClubs() {
   showStatus('Загрузка кружков…');
   console.log('Запрос отправлен');
   try {
-    const list = await getClubs();
-    console.log('Кружки пришли:', list.length);
-    const seats = await getSeats();
+    const results = await Promise.all([getClubs(), getSeats()]);
+    const list = results[0];
+    const seats = results[1];
     list.forEach((club) => {
       club.seats = seats[club.id];
       CLUBS.push(club);
