@@ -245,7 +245,7 @@ function validate(name, kids, left) {
   return '';
 }
 
-signForm.addEventListener('submit', (event) => {
+signForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const clubId = Number(signForm.elements.clubId.value);
   const name = signForm.elements.name.value.trim();
@@ -259,28 +259,26 @@ signForm.addEventListener('submit', (event) => {
   }
   submitBtn.disabled = true;
   submitBtn.textContent = 'Отправляем…';
-  sendSignup(clubId, kids)
-    .then(() => {
-      state.signups.push({
-        id: state.nextId,
-        clubId: clubId,
-        name: name,
-        kids: kids,
-      });
-      state.nextId = state.nextId + 1;
-      signForm.reset();
-      signForm.elements.name.focus();
-      render();
-      showToast(`Заявка принята: ${club.title}, детей: ${kids}`);
-    })
-    .catch((serverError) => {
-      formError.textContent = 'Сервер не ответил. Попробуйте еще раз';
-      console.log('Ошибка заявки:', serverError.message);
-    })
-    .finally(() => {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Записать';
+  try {
+    await sendSignup(clubId, kids);
+    state.signups.push({
+      id: state.nextId,
+      clubId: clubId,
+      name: name,
+      kids: kids,
     });
+    state.nextId = state.nextId + 1;
+    signForm.reset();
+    signForm.elements.name.focus();
+    render();
+    showToast(`Заявка принята: ${club.title}, детей: ${kids}`);
+  } catch (serverError) {
+    formError.textContent = 'Сервер не ответил. Попробуйте еще раз';
+    console.log('Ошибка заявки:', serverError.message);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Записать';
+  }
 });
 
 function renderSignups() {
