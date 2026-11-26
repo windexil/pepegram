@@ -474,23 +474,21 @@ retryBtn.addEventListener('click', () => {
 // ===== Обновить свободные места =====
 const refreshBtn = document.querySelector('#refresh');
 
-refreshBtn.addEventListener('click', () => {
+refreshBtn.addEventListener('click', async () => {
   refreshBtn.disabled = true;
-  getSeats()
-    .then((seats) => {
-      CLUBS.forEach((club) => {
-        club.seats = seats[club.id];
-      });
-      renderEvents();
-      showToast('Свободные места обновлены');
-    })
-    .catch((error) => {
-      showToast('Не удалось обновить места');
-      console.log('Ошибка:', error.message);
-    })
-    .finally(() => {
-      refreshBtn.disabled = false;
+  try {
+    const seats = await getSeats();
+    CLUBS.forEach((club) => {
+      club.seats = seats[club.id];
     });
+    renderEvents();
+    showToast('Свободные места обновлены');
+  } catch (error) {
+    showToast('Не удалось обновить места');
+    console.log('Ошибка:', error.message);
+  } finally {
+    refreshBtn.disabled = false;
+  }
 });
 
 // ===== Запуск =====
