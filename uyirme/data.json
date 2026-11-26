@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Футбол",
+    "category": "sport",
+    "days": "Пн, Ср",
+    "time": "16:00",
+    "place": "Стадион у школы",
+    "price": 8000,
+    "seats": 20
+  },
+  {
+    "id": 2,
+    "title": "Домбра",
+    "category": "music",
+    "days": "Вт, Чт",
+    "time": "15:00",
+    "place": "Дворец школьников",
+    "price": 10000,
+    "seats": 10
+  },
+  {
+    "id": 3,
+    "title": "Рисование",
+    "category": "art",
+    "days": "Сб",
+    "time": "11:00",
+    "place": "Студия «Палитра»",
+    "price": 9000,
+    "seats": 12
+  },
+  {
+    "id": 4,
+    "title": "Робототехника",
+    "category": "code",
+    "days": "Пт",
+    "time": "17:00",
+    "place": "IT-клуб",
+    "price": 15000,
+    "seats": 3
+  },
+  {
+    "id": 5,
+    "title": "Шахматы",
+    "category": "sport",
+    "days": "Вт",
+    "time": "17:00",
+    "place": "Библиотека",
+    "price": 0,
+    "seats": 16
+  },
+  {
+    "id": 6,
+    "title": "Хор",
+    "category": "music",
+    "days": "Ср, Пт",
+    "time": "16:30",
+    "place": "Дворец школьников",
+    "price": 0,
+    "seats": 30
+  },
+  {
+    "id": 7,
+    "title": "Лепка",
+    "category": "art",
+    "days": "Вс",
+    "time": "12:00",
+    "place": "Студия «Палитра»",
+    "price": 7000,
+    "seats": 8
+  },
+  {
+    "id": 8,
+    "title": "Scratch для начинающих",
+    "category": "code",
+    "days": "Сб",
+    "time": "10:00",
+    "place": "Библиотека",
+    "price": 0,
+    "seats": 14
+  }
+]

@@ -463,17 +463,6 @@ retryBtn.addEventListener('click', () => {
   loadClubs();
 });
 
-// ===== Опыт: в каком порядке? =====
-function orderDemo() {
-  setTimeout(() => {
-    console.log('4. setTimeout 0 мс: кружков', CLUBS.length);
-  }, 0);
-  Promise.resolve().then(() => {
-    console.log('3. then: кружков', CLUBS.length);
-  });
-  console.log('1. orderDemo: кружков', CLUBS.length);
-}
-
 // ===== Обновить свободные места =====
 const refreshBtn = document.querySelector('#refresh');
 
@@ -500,5 +489,3 @@ refreshBtn.addEventListener('click', () => {
 // Кружки придут с сервера: start() вызовем, когда придут
 load();
 loadClubs();
-orderDemo();
-console.log('2. Конец «Запуска»');
