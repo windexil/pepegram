@@ -432,7 +432,7 @@ function showStatus(text) {
 }
 
 // loadClubs: попросить кружки у сервера
-function loadClubs() {
+async function loadClubs() {
   statusEl.classList.remove('is-error');
   retryBtn.hidden = true;
   showStatus('Загрузка кружков…');
@@ -488,4 +488,5 @@ refreshBtn.addEventListener('click', () => {
 // ===== Запуск =====
 // Кружки придут с сервера: start() вызовем, когда придут
 load();
-loadClubs();
+const loading = loadClubs();
+console.log('loadClubs вернула:', loading);
