@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Үйірме — кружки и секции</title>
+  <link rel="icon" href="images/logo.svg">
+  <link rel="stylesheet" href="style.css">
+  <script src="server.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- 1. Шапка: название и сводка -->
+  <header class="header">
+    <img class="logo" src="images/logo.svg" alt="" width="48" height="48">
+    <div>
+      <h1 class="brand">Үйірме</h1>
+      <p class="tagline">Кружки и секции для детей Алматы</p>
+    </div>
+    <p class="stats" id="stats">Кружки загружаются…</p>
+  </header>
+
+  <!-- 2. Анонс: JavaScript показывает его и листает по таймеру -->
+  <section class="promo" id="promo" aria-label="Анонс" hidden>
+    <p class="promo-label">Набор</p>
+    <p class="promo-text" id="promo-text"></p>
+    <button class="promo-btn" id="promo-toggle" type="button">
+      ⏸ Пауза
+    </button>
+  </section>
+
+  <main class="layout">
+    <!-- 3. Кружки: фильтры, статус и карточки -->
+    <section class="catalog" aria-labelledby="catalog-title">
+      <h2 class="section-title" id="catalog-title">Кружки</h2>
+      <div class="filters">
+        <input class="search" id="search" type="search"
+          placeholder="Поиск по названию" aria-label="Поиск по названию">
+        <div class="chips" id="chips">
+          <button class="chip is-active" type="button" data-cat="all">
+            Все <span class="chip-count"></span>
+          </button>
+          <button class="chip" type="button" data-cat="sport">
+            Спорт <span class="chip-count"></span>
+          </button>
+          <button class="chip" type="button" data-cat="music">
+            Музыка <span class="chip-count"></span>
+          </button>
+          <button class="chip" type="button" data-cat="art">
+            Искусство <span class="chip-count"></span>
+          </button>
+          <button class="chip" type="button" data-cat="code">
+            IT <span class="chip-count"></span>
+          </button>
+        </div>
+        <div class="filters-row">
+          <label class="check">
+            <input type="checkbox" id="free-only"> Только бесплатные
+          </label>
+          <select class="sort" id="sort" aria-label="Порядок">
+            <option value="date">По порядку</option>
+            <option value="cheap">Сначала дешевые</option>
+            <option value="expensive">Сначала дорогие</option>
+          </select>
+          <button class="btn-link" id="reset-filters" type="button">
+            Сбросить фильтры
+          </button>
+          <button class="btn-link" id="refresh" type="button">
+            Обновить места
+          </button>
+        </div>
+      </div>
+      <!-- Статус загрузки: пригодится на уроках 41–43 -->
+      <p class="status" id="status" hidden></p>
+      <button class="btn-link" id="retry" type="button" hidden>
+        Повторить
+      </button>
+      <p class="found" id="found"></p>
+      <!-- 4. Карточки: их создает JavaScript. Одна карточка:
+      <li class="card" data-id="1" data-cat="sport">
+        <p class="card-tag">Спорт</p>
+        <h3 class="card-title">Футбол</h3>
+        <p class="card-meta">Пн, Ср · 16:00 · Стадион у школы</p>
+        <p class="card-price">8000 ₸ в месяц</p>
+        <p class="card-seats">Осталось мест: 20</p>
+        <div class="card-actions">
+          <button class="btn-fav" data-action="fav">♡ В избранное</button>
+          <button class="btn" data-action="sign">Записать</button>
+        </div>
+      </li>
+      Классы-состояния: is-fav — в избранном, is-full — мест нет -->
+      <ul class="cards" id="clubs"></ul>
+      <p class="empty" id="empty" hidden>
+        Ничего не найдено. Попробуйте другой запрос или раздел.
+      </p>
+    </section>
+
+    <!-- 5. Боковая колонка: избранное, заявка, мои заявки -->
+    <aside class="sidebar">
+      <section class="panel" aria-labelledby="favs-title">
+        <h2 class="panel-title" id="favs-title">
+          Избранное <span class="badge" id="fav-count">0</span>
+        </h2>
+        <ul class="mini-list" id="favs"></ul>
+        <p class="hint" id="favs-empty">
+          Нажмите «♡ В избранное» на карточке
+        </p>
+      </section>
+      <section class="panel" aria-labelledby="sign-title">
+        <h2 class="panel-title" id="sign-title">Запись в кружок</h2>
+        <form class="form" id="sign-form" novalidate>
+          <label class="field">Кружок
+            <select name="clubId" id="club-select"></select>
+          </label>
+          <label class="field">Имя ребенка
+            <input name="name" type="text"
+              placeholder="Например, Алихан">
+          </label>
+          <label class="field">Детей, от 1 до 3
+            <input name="kids" type="number" min="1" max="3" value="1">
+          </label>
+          <p class="form-error" id="form-error" role="alert"></p>
+          <button class="btn" type="submit">Записать</button>
+        </form>
+      </section>
+      <section class="panel" aria-labelledby="signups-title">
+        <h2 class="panel-title" id="signups-title">
+          Мои заявки <span class="badge" id="sign-count">0</span>
+        </h2>
+        <ul class="mini-list" id="signups"></ul>
+        <p class="hint" id="signups-empty">Заявок пока нет</p>
+        <button class="btn-link" id="reset" type="button">
+          Очистить избранное и заявки
+        </button>
+      </section>
+    </aside>
+  </main>
+
+  <!-- 6. Подвал: подписка на новости -->
+  <footer class="footer">
+    <form class="news" id="news-form" novalidate>
+      <label class="news-label" for="news-email">
+        Новые кружки на почту
+      </label>
+      <input class="news-input" id="news-email" name="email" type="email"
+        placeholder="you@mail.kz">
+      <button class="btn" type="submit">Подписаться</button>
+    </form>
+    <p class="news-note" id="news-note"></p>
+    <p class="copy">Үйірме · учебный проект · кружки придуманы</p>
+  </footer>
+
+  <!-- 7. Сообщение внизу экрана: его показывает JavaScript -->
+  <p class="toast" id="toast" role="status"></p>
+</body>
+</html>
