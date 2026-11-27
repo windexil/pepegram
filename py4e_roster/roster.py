@@ -1,5 +1,13 @@
 import json
+import os
 import sqlite3
+
+# Find the data file: roster_data.json (as the assignment says) or roster.json
+fname = input('Enter file name (Enter = roster_data.json): ').strip()
+if len(fname) < 1:
+    fname = 'roster_data.json'
+    if not os.path.exists(fname) and os.path.exists('roster.json'):
+        fname = 'roster.json'
 
 conn = sqlite3.connect('rosterdb.sqlite')
 cur = conn.cursor()
@@ -28,15 +36,11 @@ CREATE TABLE Member (
 )
 ''')
 
-fname = input('Enter file name: ')
-if len(fname) < 1:
-    fname = 'roster_data.json'
-
 # [
 #   [ "Charley", "si110", 1 ],
 #   [ "Mea", "si110", 0 ],
-str_data = open(fname).read()
-json_data = json.loads(str_data)
+with open(fname, encoding='utf-8') as fh:
+    json_data = json.load(fh)
 
 for entry in json_data:
     name = entry[0]
