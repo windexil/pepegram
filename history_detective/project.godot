@@ -1,0 +1,36 @@
+; Engine configuration file.
+; Godot 4.3+ (GDScript). Ашу: Godot Project Manager -> Import -> осы файл.
+
+config_version=5
+
+[application]
+
+config/name="History Detective — Тарихи дерек зерттеушісі"
+config/description="КЕЙС 07. Тарих және медиасауаттылық бойынша детективтік білім беру ойыны."
+run/main_scene="res://scenes/main_menu.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://icon.svg"
+
+[autoload]
+
+DataRepo="*res://autoload/data_repo.gd"
+GameState="*res://autoload/game_state.gd"
+Stats="*res://autoload/stats_manager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1440
+window/size/window_height_override=860
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
